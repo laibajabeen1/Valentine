@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Valentine 💗</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Shimmer effect in background */
+    body::before {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 70%);
+        animation: shimmer 10s linear infinite;
+    }
+
+    @keyframes shimmer {
+        0% {transform: translate(-50%, -50%) rotate(0deg);}
+        100% {transform: translate(-50%, -50%) rotate(360deg);}
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 50px;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        animation: fadeIn 1.5s ease;
+        z-index: 2;
+    }
+
+    h1 {
+        color: #ff4d6d;
+        font-size: 36px;
+        margin-bottom: 15px;
+        text-shadow: 0 0 10px #fff;
+    }
+
+    p {
+        color: #555;
+        margin-bottom: 30px;
+        font-size: 18px;
+    }
+
+    .buttons {
+        position: relative;
+        height: 120px;
+    }
+
+    button {
+        padding: 18px 50px;
+        font-size: 20px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+        background: #ff4d6d;
+        color: white;
+        box-shadow: 0 10px 30px rgba(255,77,109,0.5);
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.15) rotate(-2deg);
+    }
+
+    #noBtn {
+        background: #ccc;
+        color: #555;
+        position: absolute;
+        left: 50%;
+        top: 60px;
+        transform: translateX(-50%);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .flower {
+        position: absolute;
+        font-size: 50px; /* bigger flowers */
+        animation: floatUp 5s linear forwards;
+        z-index: 1;
+        transform-origin: center;
+    }
+
+    .love-text {
+        position: absolute;
+        font-size: 20px;
+        color: #ff4d6d;
+        background: rgba(255,255,255,0.95);
+        padding: 12px 20px;
+        border-radius: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        animation: popFade 5s ease forwards;
+        z-index: 3;
+        text-align: center;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: scale(0.9);}
+        to {opacity: 1; transform: scale(1);}
+    }
+
+    @keyframes floatUp {
+        0% {transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 1;}
+        50% {transform: translateY(50vh) rotate(180deg) scale(1.1);}
+        100% {transform: translateY(-10vh) rotate(360deg) scale(1); opacity: 0;}
+    }
+
+    @keyframes popFade {
+        0% {transform: scale(0); opacity: 0;}
+        20% {transform: scale(1.2); opacity: 1;}
+        80% {opacity: 1;}
+        100% {transform: scale(1) translateY(-60px); opacity: 0;}
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainBox">
+    <h1>Will you be my Valentine? 💖</h1>
+    <p>I built this with all my heart… just for you 🥹</p>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 💘</button>
+        <button id="noBtn">No 😏</button>
+    </div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const mainBox = document.getElementById("mainBox");
+
+    const loveMessages = [
+        "You are my favorite person 💖",
+        "I choose you, always 🥹",
+        "My heart feels safe with you 💗",
+        "You are my today and all my tomorrows 🌸",
+        "Every line of this code has your name ❤️",
+        "You make my world softer and brighter ✨",
+        "I fall for you a little more every day 🌷",
+        "You are my home 💞",
+        "Loving you is my favorite thing 💐",
+        "Forever feels right with you 💘"
+    ];
+
+    noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("click", moveButton);
+
+    function moveButton() {
+        const x = Math.random() * 300 - 150;
+        const y = Math.random() * 100;
+        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    yesBtn.addEventListener("click", () => {
+        mainBox.classList.add("hidden");
+        startFlowers();
+        startLoveMessages();
+    });
+
+    function startFlowers() {
+        const flowers = ["🌸","🌹","💐","🌺","🌷","❤️"];
+        setInterval(() => {
+            const flower = document.createElement("div");
+            flower.className = "flower";
+            flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+            flower.style.left = Math.random() * 100 + "vw";
+            flower.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            flower.style.fontSize = (Math.random() * 40 + 40) + "px"; // bigger, random sizes
+            document.body.appendChild(flower);
+
+            setTimeout(() => flower.remove(), 5000);
+        }, 300);
+    }
+
+    function startLoveMessages() {
+        let index = 0;
+
+        const interval = setInterval(() => {
+            if (index >= loveMessages.length) {
+                clearInterval(interval);
+                return;
+            }
+
+            const msg = document.createElement("div");
+            msg.className = "love-text";
+            msg.innerText = loveMessages[index];
+            msg.style.left = Math.random() * 70 + 15 + "vw";
+            msg.style.top = Math.random() * 60 + 20 + "vh";
+
+            document.body.appendChild(msg);
+
+            setTimeout(() => msg.remove(), 5000);
+            index++;
+        }, 700);
+    }
+</script>
+
+</body>
+</html>
